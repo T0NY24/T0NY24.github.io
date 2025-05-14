@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comparador de Imágenes Optimizadas</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+        
+        .description {
+            font-size: 1.1em;
+            color: #7f8c8d;
+            max-width: 800px;
+            margin: 0 auto 20px;
+        }
+        
+        .stats-panel {
+            background-color: #ecf0f1;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .stats-title {
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #2c3e50;
+        }
+        
+        .stats-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: space-around;
+        }
+        
+        .stat-box {
+            background-color: white;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            flex: 1;
+            min-width: 250px;
+            max-width: 300px;
+        }
+        
+        .image-comparison-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        .comparison-set {
+            background-color: white;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+        }
+        
+        .set-title {
+            font-size: 1.2em;
+            color: #2c3e50;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .format-tabs {
+            display: flex;
+            margin-bottom: 15px;
+        }
+        
+        .format-tab {
+            padding: 8px 16px;
+            cursor: pointer;
+            background-color: #eee;
+            border: none;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+        
+        .format-tab:first-child {
+            border-radius: 4px 0 0 4px;
+        }
+        
+        .format-tab:last-child {
+            border-radius: 0 4px 4px 0;
+        }
+        
+        .format-tab.active {
+            background-color: #3498db;
+            color: white;
+        }
+        
+        .image-container {
+            position: relative;
+            margin-bottom: 15px;
+        }
+        
+        .comparison-image {
+            width: 100%;
+            height: auto;
+            border-radius: 4px;
+            display: none;
+        }
+        
+        .comparison-image.active {
+            display: block;
+        }
+        
+        .image-overlay {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: rgba(0,0,0,0.6);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-size: 0.8em;
+        }
+        
+        .image-stats {
+            display: flex;
+            justify-content: space-between;
+            background-color: #f8f9fa;
+            padding: 10px;
+            border-radius: 4px;
+            font-size: 0.9em;
+        }
+        
+        .comparison-tools {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+        
+        .tool-button {
+            padding: 8px 12px;
+            background-color: #2c3e50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.9em;
+            transition: all 0.2s ease;
+        }
+        
+        .tool-button:hover {
+            background-color: #34495e;
+        }
+        
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid #ddd;
+            color: #7f8c8d;
+            font-size: 0.9em;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Comparador de Imágenes Optimizadas</h1>
+        <p class="description">Compare imágenes originales con sus versiones optimizadas en diferentes formatos. Analice el equilibrio entre calidad visual y tamaño de archivo para encontrar la mejor opción para su proyecto.</p>
+    </header>
+    
+    <div class="stats-panel">
+        <div class="stats-title">Estadísticas de Optimización</div>
+        <div class="stats-container">
+            <div class="stat-box">
+                <h3>Ahorro Promedio</h3>
+                <p><strong>JPEG:</strong> 62% de reducción</p>
+                <p><strong>WebP:</strong> 78% de reducción</p>
+            </div>
+            <div class="stat-box">
+                <h3>Tamaño Total</h3>
+                <p><strong>Original:</strong> 8.2 MB</p>
+                <p><strong>JPEG:</strong> 3.1 MB</p>
+                <p><strong>WebP:</strong> 1.8 MB</p>
+            </div>
+            <div class="stat-box">
+                <h3>Compatibilidad</h3>
+                <p><strong>JPEG:</strong> 100% navegadores</p>
+                <p><strong>WebP:</strong> 97% navegadores</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="image-comparison-grid">
+        <!-- Conjunto 1 -->
+        <div class="comparison-set">
+            <h3 class="set-title">Imagen 1</h3>
+            <div class="comparison-tools">
+                <button class="tool-button zoom-button">Zoom</button>
+                <button class="tool-button side-by-side-button">Vista lado a lado</button>
+            </div>
+            <div class="format-tabs">
+                <button class="format-tab active" data-set="1" data-format="original">Original</button>
+                <button class="format-tab" data-set="1" data-format="jpeg">JPEG</button>
+                <button class="format-tab" data-set="1" data-format="webp">WebP</button>
+            </div>
+            <div class="image-container">
+                <img src="Imagenes_Originales/1.png" alt="Imagen 1 Original" class="comparison-image img-1-original active">
+                <img src="Imagenes_Optimizadas/1.jpg" alt="Imagen 1 JPG" class="comparison-image img-1-jpeg">
+                <img src="Imagenes_Optimizadas/1.webp" alt="Imagen 1 WebP" class="comparison-image img-1-webp">
+                <div class="image-overlay format-label">Original</div>
+            </div>
+            <div class="image-stats">
+                <span><strong>Original:</strong> 2.1 MB</span>
+                <span><strong>JPEG:</strong> 820 KB</span>
+                <span><strong>WebP:</strong> 480 KB</span>
+            </div>
+        </div>
+
+        <!-- Conjunto 2 -->
+        <div class="comparison-set">
+            <h3 class="set-title">Imagen 2</h3>
+            <div class="comparison-tools">
+                <button class="tool-button zoom-button">Zoom</button>
+                <button class="tool-button side-by-side-button">Vista lado a lado</button>
+            </div>
+            <div class="format-tabs">
+                <button class="format-tab active" data-set="2" data-format="original">Original</button>
+                <button class="format-tab" data-set="2" data-format="jpeg">JPEG</button>
+                <button class="format-tab" data-set="2" data-format="webp">WebP</button>
+            </div>
+            <div class="image-container">
+                <img src="Imagenes_Originales/3.jpg" alt="Imagen 2 Original" class="comparison-image img-2-original active">
+                <img src="Imagenes_Optimizadas/3.jpg" alt="Imagen 2 JPEG" class="comparison-image img-2-jpeg">
+                <img src="Imagenes_Optimizadas/3.webp" alt="Imagen 2 WebP" class="comparison-image img-2-webp">
+                <div class="image-overlay format-label">Original</div>
+            </div>
+            <div class="image-stats">
+                <span><strong>Original:</strong> 1.8 MB</span>
+                <span><strong>JPEG:</strong> 670 KB</span>
+                <span><strong>WebP:</strong> 390 KB</span>
+            </div>
+        </div>
+
+        <!-- Conjunto 3 -->
+        <div class="comparison-set">
+            <h3 class="set-title">Imagen 3</h3>
+            <div class="comparison-tools">
+                <button class="tool-button zoom-button">Zoom</button>
+                <button class="tool-button side-by-side-button">Vista lado a lado</button>
+            </div>
+            <div class="format-tabs">
+                <button class="format-tab active" data-set="3" data-format="original">Original</button>
+                <button class="format-tab" data-set="3" data-format="jpeg">JPEG</button>
+                <button class="format-tab" data-set="3" data-format="webp">WebP</button>
+            </div>
+            <div class="image-container">
+                <img src="Imagenes_Originales/4.jpg" alt="Imagen 3 Original" class="comparison-image img-3-original active">
+                <img src="Imagenes_Optimizadas/4.jpg" alt="Imagen 3 JPEG" class="comparison-image img-3-jpeg">
+                <img src="Imagenes_Optimizadas/4.webp" alt="Imagen 3 WebP" class="comparison-image img-3-webp">
+                <div class="image-overlay format-label">Original</div>
+            </div>
+            <div class="image-stats">
+                <span><strong>Original:</strong> 2.5 MB</span>
+                <span><strong>JPEG:</strong> 950 KB</span>
+                <span><strong>WebP:</strong> 520 KB</span>
+            </div>
+        </div>
+
+        <!-- Conjunto 4 -->
+        <div class="comparison-set">
+            <h3 class="set-title">Imagen 4</h3>
+            <div class="comparison-tools">
+                <button class="tool-button zoom-button">Zoom</button>
+                <button class="tool-button side-by-side-button">Vista lado a lado</button>
+            </div>
+            <div class="format-tabs">
+                <button class="format-tab active" data-set="4" data-format="original">Original</button>
+                <button class="format-tab" data-set="4" data-format="jpeg">JPEG</button>
+                <button class="format-tab" data-set="4" data-format="webp">WebP</button>
+            </div>
+            <div class="image-container">
+                <img src="Imagenes_Originales/5.svg" alt="Imagen SVG Original" class="comparison-image img-4-original active">
+                <img src="Imagenes_Optimizadas/5.avif" alt="Imagen 4 JPEG" class="comparison-image img-4-jpeg">
+                <img src="Imagenes_Optimizadas/5.webp" alt="Imagen 4 WebP" class="comparison-image img-4-webp">
+                <div class="image-overlay format-label">Original</div>
+            </div>
+            <div class="image-stats">
+                <span><strong>Original:</strong> 1.8 MB</span>
+                <span><strong>JPEG:</strong> 660 KB</span>
+                <span><strong>WebP:</strong> 410 KB</span>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>Herramienta de Comparación de Imágenes Optimizadas | Todos los derechos reservados © 2025</p>
+    </footer>
+
+    <script>
+        // Configurar las pestañas para cambiar entre formatos
+        document.querySelectorAll('.format-tab').forEach(tab => {
+            tab.addEventListener('click', function() {
+                const set = this.dataset.set;
+                const format = this.dataset.format;
+                
+                // Actualizar pestañas activas
+                document.querySelectorAll(`.format-tab[data-set="${set}"]`).forEach(t => {
+                    t.classList.remove('active');
+                });
+                this.classList.add('active');
+                
+                // Actualizar imágenes visibles
+                document.querySelectorAll(`.comparison-set:nth-child(${set}) .comparison-image`).forEach(img => {
+                    img.classList.remove('active');
+                });
+                document.querySelector(`.img-${set}-${format}`).classList.add('active');
+                
+                // Actualizar etiqueta de formato
+                const formatLabel = document.querySelector(`.comparison-set:nth-child(${set}) .image-overlay`);
+                formatLabel.textContent = format.charAt(0).toUpperCase() + format.slice(1);
+            });
+        });
+        
+        // Simular funcionalidad de botones de herramientas
+        document.querySelectorAll('.zoom-button').forEach(button => {
+            button.addEventListener('click', function() {
+                alert('Funcionalidad de zoom: Esta característica permitiría ampliar la imagen para ver detalles.');
+            });
+        });
+        
+        document.querySelectorAll('.side-by-side-button').forEach(button => {
+            button.addEventListener('click', function() {
+                alert('Vista lado a lado: Esta característica mostraría ambos formatos juntos para comparación directa.');
+            });
+        });
+    </script>
+</body>
+</html>
